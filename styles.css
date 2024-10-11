@@ -60,7 +60,7 @@ header p {
 
 /* Container for Main Content */
 .container {
-    max-width: 1000px;
+    max-width: 300px;
     margin: 0 auto;
     padding: 0 20px;
     text-align: justify;
