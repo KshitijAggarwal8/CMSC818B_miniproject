@@ -13,9 +13,28 @@ body {
     overflow-x: hidden; /* Prevents horizontal scroll */
 }
 
+/* Enable smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+.summary-image {
+    display: block;          /* Center the image */
+    max-width: 80%;        /* Adjust the max width as needed */
+    margin: 20px auto;     /* Center horizontally and add vertical spacing */
+}
+
+figcaption {
+    font-style: italic; /* Italics for the caption */
+    text-align: center; /* Center the caption */
+    margin-top: 10px; /* Space above the caption */
+    color: #555; /* Optional: Change the color for better contrast */
+}
+
+
 /* Header Styling */
 header {
-    background: linear-gradient(45deg, #4CAF50, #66BB6A), url('https://via.placeholder.com/1920x600') center/cover no-repeat;
+    background: linear-gradient(45deg, #1e30f0, #46c44c), url('https://via.placeholder.com/1920x600') center/cover no-repeat;
     color: white;
     text-align: center;
     height: 100vh;
@@ -28,7 +47,7 @@ header {
 
 header .overlay {
     background: rgba(0, 0, 0, 0.5);
-    padding: 60px 20px;
+    padding: 20px 20px;
     border-radius: 10px;
 }
 
@@ -42,25 +61,26 @@ header h1 {
 header p {
     font-size: 1.3rem;
     font-weight: 400;
+    margin-top: 20px; /* Add this line for spacing */
 }
 
 .cta-button {
-    background-color: #ff9800;
+    background-color: #46c44c;
     color: white;
-    padding: 15px 30px;
-    border-radius: 25px;
+    padding: 12px 35px;
+    border-radius: 10px;
     font-size: 1.1rem;
     text-decoration: none;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
 }
 
 .cta-button:hover {
-    background-color: #e67e22;
+    background-color: #5763de;
 }
 
 /* Container for Main Content */
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 0 20px;
     text-align: justify;
@@ -73,9 +93,9 @@ main {
 
 main h2 {
     font-size: 2rem;
-    color: #4CAF50;
+    color: #3128dc;
     margin-bottom: 15px;
-    border-bottom: 2px solid #4CAF50;
+    border-bottom: 2px solid #3128dc;
     padding-bottom: 5px;
 }
 
@@ -98,7 +118,7 @@ ul li {
 
 ul li:before {
     content: '•';
-    color: #4CAF50;
+    color: #3128dc;
     position: absolute;
     left: 0;
     font-size: 1.5rem;
@@ -107,7 +127,7 @@ ul li:before {
 pre {
     background-color: #f9f9f9;
     padding: 15px;
-    border-left: 5px solid #4CAF50;
+    border-left: 5px solid #3128dc;
     border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
     overflow-x: auto;
@@ -118,7 +138,7 @@ pre {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #333;
+    background-color: #1e30f0;
     color: white;
     margin-top: 40px;
     border-radius: 8px;
@@ -127,6 +147,17 @@ footer {
 
 footer p {
     font-size: 1rem;
+}
+
+.name-bubble {
+    background-color: #f0f0f0; /* Background color of the bubble */
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px 20px; /* Space inside the bubble */
+    display: inline-block; /* Makes the bubble size fit the content */
+    margin: 15px 0; /* Space above and below the bubble */
+    font-size: 1.2rem; /* Font size for your name */
+    color: #333; /* Text color */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional: Shadow for a floating effect */
 }
 
 /* Responsive Design */
