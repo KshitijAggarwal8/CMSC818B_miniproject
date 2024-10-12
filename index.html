@@ -8,75 +8,153 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Google Font for typography -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
     <header id="hero">
         <div class="overlay">
-            <h1>Bayesian Reinforcement Learning Overview</h1>
-            <p>An exploration of decision-making techniques in robotics under uncertainty</p>
-            <a href="#summary" class="cta-button">Learn More</a>
+            <h1>&nbsp&nbsp&nbsp Bayesian Reinforcement Learning &nbsp&nbsp&nbsp</h1>
+            <p>An exploration of decision-making techniques in robotics under uncertain environments</p>
+            <p>&nbsp</p>
+            <!-- <p>&nbsp</p> -->
+            <a href="#summary" class="cta-button">Get started</a>
+            <p>&nbsp</p>
+            <p>&nbsp</p>
+            <p style="font-style: bold;">Kshitij Aggarwal | kshitij2@umd.edu</p> <!-- Add your name here -->
+            
         </div>
     </header>
 
     <main class="container">
         <section id="summary" class="fade-in">
             <h2>1. Summary</h2>
-            <p>Bayesian Reinforcement Learning (BRL) helps machines make decisions in uncertain environments. In robotics, it allows robots to learn and adapt as they interact with their surroundings, balancing between exploration and exploitation to maximize rewards. BRL uses probabilities to represent uncertainty about the environment's behavior and updates its knowledge based on experience.</p>
+            <p>Bayesian Reinforcement Learning (BRL) is an advanced approach to help machines make decisions in uncertain environments. 
+                Imagine if we are teaching a robot to navigate through an unknown space. The robot starts without much knowledge of its surroundings but learns by interacting with the environment. 
+                At each step, it decides what action to take, like moving left or right, based on the feedback it receives (rewards). However, the environment is unpredictable, and the robot cannot know for sure what the best action is. 
+                BRL helps the robot handle this uncertainty by using probabilities (called Bayesian methods) to make better decisions as it learns more.</p>
+                
+            <figure>
+                <img src="rl.png.webp" alt="Italian Trulli" class="summary-image">
+                <figcaption style="font-style: italic; text-align: center;">A mouse learning to solve an unknown maze</figcaption>
+            </figure>
+            <p>&nbsp</p>
+            <p>In simple terms, BRL is like having a robot that updates its understanding of the world every time it makes a move. It learns from experience and uses its growing knowledge to choose actions that are more likely to lead to success. 
+                This is especially important when the robot has incomplete or uncertain information about the environment.</p>
+
         </section>
 
         <section id="formal-definition" class="fade-in">
             <h2>2. Formal Definition</h2>
-            <p>BRL models uncertainty using a probability distribution over the environment's dynamics, represented by a Markov Decision Process (MDP). The MDP is defined as:</p>
-            <pre>(S, A, P, R, γ)</pre>
+            <p>In Bayesian Reinforcement Learning, the core idea is to model uncertainty about the environment's dynamics using a probability distribution. The decision-making problem is typically represented as a Markov Decision Process (MDP), defined by a tuple <i>(S,A,P,R,γ)</i></p>
             <p>Where:</p>
             <ul>
-                <li><strong>S</strong> - set of states</li>
-                <li><strong>A</strong> - set of actions</li>
-                <li><strong>P(s'|s,a)</strong> - transition probability</li>
-                <li><strong>R(s,a)</strong> - reward function</li>
-                <li><strong>γ</strong> - discount factor</li>
+                <li><strong><i>S</i></strong> - set of states</li>
+                <li><strong><i>A</i></strong> - set of actions</li>
+                <li><strong><i>P(s'|s,a)</i></strong> -  is the transition probability, i.e., the probability of moving to state s′ from state s when taking action a,</li>
+                <li><strong><i>R(s,a)</i></strong> - is the reward function that gives a scalar feedback for taking action aa in state s,</li>
+                <li><strong><i>γ</i></strong> -  is the discount factor, controlling the importance of future rewards.</li>
             </ul>
-            <p>In BRL, the transition probabilities and rewards are not known in advance. They are treated as random variables with associated prior distributions. The agent updates its knowledge using Bayes' theorem as new data is collected.</p>
+            <p>In BRL, the transition probabilities <i>P</i> and the reward function <i>R</i> are not assumed to be known beforehand. 
+                Instead, they are treated as random variables with associated prior distributions. Given observations of state transitions and rewards, 
+                the posterior distribution over <i>P</i> and <i>R</i> is updated using Bayes’ rule:
+                \[
+                P(\theta | D) = \frac{P(D | \theta) P(\theta)}{P(D)}
+                \]
+            </p>
+            <p>where <i>θ</i> represents the unknown parameters of the environment (such as transition probabilities), and <i>D</i> is the observed data (state-action-reward sequences). 
+                The goal is to make decisions by choosing actions that maximize the expected cumulative reward, where the expectation is computed with respect to the posterior distribution over the environment's dynamics.</p>
+
         </section>
 
         <section id="key-results" class="fade-in">
-            <h2>3. Key Results</h2>
-            <p>The main result of BRL is the concept of a <em>Bayes-optimal policy</em>, where decisions are made based on a posterior distribution over the environment's parameters. Posterior sampling (Thompson sampling) is a common technique for balancing exploration and exploitation in BRL, allowing agents to try new actions while using current knowledge to maximize rewards.</p>
+            <h2>3. Overview of Key Results</h2>
+            <p>A key result in Bayesian Reinforcement Learning is the formalization of optimal decision-making under uncertainty. In traditional reinforcement learning (RL), the goal is to find a policy <i>π(a∣s)</i> that maximizes the expected cumulative reward. 
+                In BRL, however, the focus is on finding a <i>Bayes-optimal</i> policy that takes into account uncertainty in both the transition dynamics and the reward function. 
+                This leads to what is known as a Bayesian-optimal MDP, where the solution requires integrating over the uncertainty in the model parameters.</p>
+               
+                <figure>
+                    <img src="exploit.png" alt="exploit" class="summary-image">
+                    <figcaption style="font-style: italic; text-align: center;">Exploitation vs exploration</figcaption>
+                </figure>
+                <p>&nbsp</p>
+
+                <P>Second important result is the idea of <i>posterior sampling</i> (also called Thompson sampling). This technique allows the agent to balance <i>exploration</i> (trying out new actions to learn more about the environment) 
+                    and <i>exploitation</i> (choosing actions that seem most promising based on current knowledge). 
+                    Posterior sampling achieves this by sampling a model from the posterior distribution and acting optimally with respect to the sampled model.</P>
+                
+                <p>Another major advantage of BRL is that it implicitly facilitates <i>regularization</i>. By assuming a prior on the value function, the parameters
+                    defining a policy, or the model parameters, we avoid the trap of letting
+                    a few data points steer us away from the true parameters. On the other
+                    hand, having a prior precludes overly rapid convergence. The role of
+                    the prior is therefore to soften the effect of sampling a finite dataset,
+                    effectively leading to regularization</p>
         </section>
 
         <section id="decision-making-robotics" class="fade-in">
-            <h2>4. Decision-Making for Robotics</h2>
-            <p>In robotics, BRL helps robots operate in dynamic or unknown environments. For example, a rescue robot can learn the layout of a building as it moves, updating its decisions based on new information. BRL enables robots to balance between gathering information about an unfamiliar environment and using known data to make efficient decisions, such as finding survivors during rescue missions.</p>
+            <h2>4. BRL in Decision-Making for Robotics</h2>
+            <p>Robotics involves making decisions in real-time, often in environments that are dynamic or only partially known. BRL is crucial in this context because robots frequently operate under uncertainty. 
+                For example, consider a robot navigating a rescue mission in an unknown building. Initially, the robot doesn’t know the layout or where obstacles might be. 
+                Using BRL, the robot can learn the environment as it moves, updating its knowledge (posterior distribution) based on new data and refining its decision-making.</p>
+
+            <p>In practice, BRL helps robots balance exploration (gathering new information) and exploitation (using known information to make efficient decisions). For instance, a robot might initially take actions that 
+                prioritize gathering information about a new environment (like scanning rooms) and, over time, shift to more goal-directed behavior (like locating survivors). </p>
         </section>
 
         <section id="variants" class="fade-in">
             <h2>5. Variants of Bayesian Reinforcement Learning</h2>
             <ul>
-                <li><strong>Bayesian Model-Based RL</strong>: Builds a probabilistic model of the environment's dynamics and updates it based on interactions.</li>
-                <li><strong>Bayesian Model-Free RL</strong>: Directly learns the value function or policy using Bayesian methods, without explicit modeling of the environment.</li>
-                <li><strong>Hierarchical Bayesian RL</strong>: Incorporates multiple levels of abstraction, allowing agents to learn both high-level and low-level tasks simultaneously.</li>
+                <li><strong>Bayesian Model-Based RL</strong>: In this variant, the robot builds an explicit probabilistic model of the environment's dynamics (transition probabilities and reward functions). 
+                    The robot updates its model as it interacts with the environment and plans by solving the posterior MDP.</li>
+                <li><strong>Bayesian Model-Free RL</strong>: Unlike model-based methods, model-free approaches don’t explicitly build a model of the environment. Instead, they directly learn the value function 
+                    or policy while using Bayesian methods to incorporate uncertainty. This variant is suitable when modeling the environment is difficult.</li>
+                <li><strong>Hierarchical Bayesian RL</strong>:  This extension incorporates hierarchical structure, where the robot may learn at multiple levels of abstraction. For instance, a robot might learn 
+                    high-level goals (e.g., navigate to a location) while simultaneously learning low-level motor control policies.</li>
+                    <figure>
+                        <img src="bayesian.png" alt="bayesian" class="summary-image">
+                        <figcaption style="font-style: italic; text-align: center;">Overview of the Bayesian RL approaches </figcaption>
+                    </figure>
             </ul>
         </section>
 
         <section id="applications" class="fade-in">
-            <h2>6. Important Applications</h2>
-            <p>BRL is applied in several areas of robotics, including:</p>
+            <h2>6. Overview of important applications</h2>
+            <p>Bayesian Reinforcement Learning is quintessential for robotics. Some of notable niches that take advantage of its capabilities are:</p>
             <ul>
-                <li><strong>Autonomous Navigation</strong>: Helps robots navigate unknown environments while avoiding obstacles.</li>
-                <li><strong>Robot Manipulation</strong>: Useful in handling objects with unknown properties in applications like warehouses.</li>
-                <li><strong>Human-Robot Interaction (HRI)</strong>: Allows robots to adapt to human behavior in collaborative environments like factories.</li>
+                <li><strong>Autonomous Navigation</strong>: BRL is widely used in robotics for autonomous navigation, where a robot needs to explore and map an unknown environment while avoiding obstacles. 
+                    For instance, in robotic vacuum cleaners, BRL helps balance between exploring new areas of a house and efficiently cleaning known areas.</li>
+                <li><strong>Robot Manipulation</strong>: In environments where a robot interacts with objects (like a robotic arm in a warehouse), BRL is useful to handle uncertainties about object properties 
+                    (e.g., weight, shape). The robot can learn to manipulate different objects based on limited prior information</li>
+                <li><strong>Human-Robot Interaction (HRI)</strong>: BRL is also used in HRI, where a robot interacts with humans. Since human behavior is uncertain, BRL allows the robot to model human preferences 
+                    and adapt its actions to improve collaboration, like assisting a human worker in assembling parts on a factory floor.</li>
             </ul>
         </section>
 
         <section id="open-questions" class="fade-in">
             <h2>7. Open Research Questions</h2>
-            <p>Some open challenges in BRL include scalability, real-time decision-making, and efficient coordination in multi-agent systems. Research is focused on developing algorithms that can efficiently scale to large, complex environments and make quick decisions in dynamic settings.</p>
-        </section>
+            <p>Several open questions remain in the field of BRL. One challenge is <strong>scalability</strong>—BRL algorithms are computationally intensive due to the need to maintain and update probability distributions over large 
+                state spaces. Developing efficient approximation techniques for large-scale problems is an active area of research.</p>
+            <p>Another challenge is <strong>real-time decision-making</strong>, particularly in robotics applications where decisions must be made quickly in dynamic environments. Methods that strike a balance between computational 
+                complexity and decision quality are critical.</p>
+            <p>Finally, integrating <strong>multi-agent BRL</strong> is an emerging area, where multiple robots or agents operate under uncertainty and must coordinate their actions. Efficient communication and coordination strategies 
+                in such systems remain an open question.</p>
+        
+            </section>
+
+        <section id="references" class="fade-in">
+            <h2>8. References</h2>
+            <p><a href="https://qbnets.wordpress.com/reinforcement-learning-bayesian-networks/">[1.] Quantum Bayesian Networks  </a></p>
+            <p><a href="https://brandinho.github.io/bayesian-perspective-q-learning/">[2.] A Bayesian Perspective on Q-Learning  </a></p>
+            <p><a href="https://link.springer.com/chapter/10.1007/978-3-642-27645-3_11#citeas">[3.] Bayesian Reinforcement Learning: Vlassis, N., Ghavamzadeh, M., Mannor, S., PoupartS  </a></p>
+            <p><a href="https://direct.mit.edu/opmi/article/doi/10.1162/opmi_a_00132/120612/Bayesian-Reinforcement-Learning-With-Limited">[4.] Bayesian Reinforcement Learning With Limited Cognitive Load   </a></p>
+            <p><a href="https://www.btelligent.com/en/blog/reinforcement-learning-bayesian-statistics-part-1-1/">[5.] Reinforcement Learning, Bayesian Statistics, and Tensorflow Probability  </a></p>
+            <p><a href="http://arxiv.org/pdf/1609.04436">[6.] Bayesian Reinforcement Learning: A Survey : Mohammad Ghavamzadeh, Shie Mannor, Joelle Pineau, Aviv Tamar  </a></p>
+
     </main>
 
     <footer>
-        <p>&copy; 2024 Bayesian Reinforcement Learning for Robotics | All Rights Reserved</p>
+        <p>Kshitij Aggarwal | kshitij2@umd.edu</p>
     </footer>
 
 </body>
